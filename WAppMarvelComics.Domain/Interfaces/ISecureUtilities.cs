@@ -6,5 +6,6 @@ namespace WAppMarvelComics.Domain.Interfaces
     {
         string EncryptSHA256(string text);
         string GenerateJWT(User user);
+        Task<bool> ValidateJWT(string token);
     }
 }

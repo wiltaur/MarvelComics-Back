@@ -12,7 +12,7 @@ namespace WAppMarvelComics.Domain.Interfaces
 
         Task<IDbContextTransaction> BeginTransactionAsync();
 
-        Task CommitAsync(IDbContextTransaction transaction);
+        Task CommitAsync(IDbContextTransaction transaction, CancellationToken cancellationToken = default);
 
         Task RollbackAsync(IDbContextTransaction transaction);
     }

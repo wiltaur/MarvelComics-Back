@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using WAppMarvelComics.Domain.Aggregates.ComicFavoriteAggregate;
 using WAppMarvelComics.Domain.Interfaces;
 
 namespace WAppMarvelComics.Domain.Aggregates;
@@ -32,4 +33,5 @@ public class User: IAggregateRoot
     public string Password { get; set; } = null!;
 
     public virtual IdentificationType IdTypeNavigation { get; set; } = null!;
+    public virtual ICollection<ComicFavorite> ComicFavorites { get; set; } = new List<ComicFavorite>();
 }

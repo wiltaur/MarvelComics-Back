@@ -13,7 +13,7 @@ namespace WAppMarvelComics.Domain.Services
             string result = string.Empty;
             try
             {
-                var userLogin = await repository.FirstOrDefaultAsync(new UserByEmailSpec(email, secureUtilities.EncryptSHA256(password)), cancellationToken);
+                var userLogin = await repository.FirstOrDefaultAsync(new UserByEmailPwSpec(email, secureUtilities.EncryptSHA256(password)), cancellationToken);
 
                 if (userLogin != null)
                     result = secureUtilities.GenerateJWT(userLogin);
@@ -39,8 +39,7 @@ namespace WAppMarvelComics.Domain.Services
                 if (userLogin != null)
                     result = true;
 
-                await unitOfWork.SaveChangesAsync(cancellationToken);
-                await unitOfWork.CommitAsync(transaction);
+                await unitOfWork.CommitAsync(transaction, cancellationToken);
             }
             catch (Exception ex)
             {

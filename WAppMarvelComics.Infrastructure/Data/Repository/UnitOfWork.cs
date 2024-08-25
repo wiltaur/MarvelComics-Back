@@ -25,7 +25,7 @@ namespace WAppMarvelComics.Infrastructure.Data.Repository
             return _currentTransaction;
         }
 
-        public async Task CommitAsync(IDbContextTransaction transaction)
+        public async Task CommitAsync(IDbContextTransaction transaction, CancellationToken cancellationToken = default)
         {
             if (transaction == null)
             {
@@ -34,8 +34,8 @@ namespace WAppMarvelComics.Infrastructure.Data.Repository
 
             try
             {
-                await _dbContext.SaveChangesAsync();
-                await transaction.CommitAsync();
+                await _dbContext.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
             }
             finally
             {

@@ -1,9 +1,6 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using WAppMarvelComics.API.Models.DTOs;
-using WAppMarvelComics.Domain.Aggregates;
 using WAppMarvelComics.Domain.Custom;
 using WAppMarvelComics.Domain.Interfaces;
 
@@ -16,11 +13,10 @@ namespace WAppMarvelComics.API.Controllers
     {
 
         /// <summary>
-        /// Method to register an user.
+        /// Method to get all type of identification.
         /// </summary>
-        /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost("[action]")]
+        [HttpGet("[action]")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResponseDto<List<IdTypesResponseDto>?>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ApiResponseDto<bool>))]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ApiResponseDto<string>))]
@@ -59,7 +55,7 @@ namespace WAppMarvelComics.API.Controllers
                 var response = new ApiResponseDto<string>(message)
                 {
                     IsSuccess = false,
-                    ReturnMessage = $"System error."
+                    ReturnMessage = $"System error: " + message
                 };
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }

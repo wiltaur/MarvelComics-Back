@@ -44,7 +44,7 @@ namespace WAppMarvelComics.API.Controllers
                         IsSuccess = true,
                         ReturnMessage = $"Logged."
                     };
-                    return BadRequest(responseOk);
+                    return Ok(responseOk);
                 }
             }
             catch (Exception ex)
@@ -53,9 +53,9 @@ namespace WAppMarvelComics.API.Controllers
                 var response = new ApiResponseDto<string>(message)
                 {
                     IsSuccess = false,
-                    ReturnMessage = $"System error."
+                    ReturnMessage = $"System error: " + message
                 };
-                return BadRequest(response);
+                return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
         }
 
@@ -67,7 +67,7 @@ namespace WAppMarvelComics.API.Controllers
         [HttpPost("[action]")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResponseDto<bool>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ApiResponseDto<bool>))]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ApiResponseDto<string>))]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError, Type = typeof(ApiResponseDto<bool>))]
         public async Task<IActionResult> RegisterUser([FromBody] UserDto request, CancellationToken cancellationToken = new CancellationToken())
         {
             try
@@ -102,10 +102,10 @@ namespace WAppMarvelComics.API.Controllers
             catch (Exception ex)
             {
                 var message = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
-                var response = new ApiResponseDto<string>(message)
+                var response = new ApiResponseDto<bool>(false)
                 {
                     IsSuccess = false,
-                    ReturnMessage = $"System error."
+                    ReturnMessage = $"System error: " + message
                 };
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }

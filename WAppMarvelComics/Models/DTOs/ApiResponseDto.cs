@@ -1,15 +1,16 @@
-﻿namespace WAppMarvelComics.API.Models.DTOs
+﻿using System.Text.Json.Serialization;
+
+namespace WAppMarvelComics.API.Models.DTOs
 {
-    public class ApiResponseDto<T>
+    public class ApiResponseDto<T>(T data)
     {
-        public ApiResponseDto(T data)
-        {
-            Data = data;
-            IsSuccess = true;
-            ReturnMessage = "";
-        }
-        public T Data { get; set; }
-        public bool IsSuccess { get; set; }
-        public string ReturnMessage { get; set; }
+        [JsonPropertyName("data")]
+        public T Data { get; set; } = data;
+
+        [JsonPropertyName("isSuccess")]
+        public bool IsSuccess { get; set; } = true;
+
+        [JsonPropertyName("returnMessage")]
+        public string ReturnMessage { get; set; } = "";
     }
 }

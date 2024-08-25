@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using WAppMarvelComics.Domain.Custom;
 using WAppMarvelComics.Domain.Interfaces;
 using WAppMarvelComics.Domain.Services;
@@ -19,6 +20,10 @@ namespace WAppMarvelComics.Domain
 
             builder.RegisterType<IdentificationTypeService>()
                .As<IIdentificationTypeService>()
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<ComicService>()
+               .As<IComicService>()
                .InstancePerLifetimeScope();
         }
     }

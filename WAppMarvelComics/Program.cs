@@ -6,7 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using WAppMarvelComics.Domain;
-using WAppMarvelComics.Domain.Custom;
+using WAppMarvelComics.Domain.Custom.Models;
+using WAppMarvelComics.Domain.Interfaces;
+using WAppMarvelComics.Domain.Services;
 using WAppMarvelComics.Infrastructure;
 using WAppMarvelComics.Infrastructure.Data;
 
@@ -26,6 +28,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddHttpClient<IComicService, ComicService>().ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+{
+    ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => { return true; }
+});
 
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo
