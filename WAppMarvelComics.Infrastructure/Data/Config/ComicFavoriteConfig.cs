@@ -8,7 +8,7 @@ namespace WAppMarvelComics.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<ComicFavorite> builder)
         {
-            builder.ToTable("ComicFavorite");
+            builder.ToTable("ComicFavorite", "Master");
 
             builder.HasKey(e => new { e.Id, e.IdUser, e.IdTypeUser });
 
