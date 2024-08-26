@@ -21,4 +21,8 @@
     <ProjectReference Include="..\WAppMarvelComics.Domain\WAppMarvelComics.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ScriptsDB\" />
+  </ItemGroup>
+
 </Project>
