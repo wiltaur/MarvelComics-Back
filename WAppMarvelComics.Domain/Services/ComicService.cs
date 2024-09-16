@@ -45,21 +45,19 @@ namespace WAppMarvelComics.Domain.Services
             var readContent = await response.Content.ReadAsStringAsync(cancellationToken);
             var comicResponse = JsonConvert.DeserializeObject<ComicResponse>(readContent);
 
-            if (comicResponse != null)
+            if (comicResponse != null && comicResponse.Data != null)
             {
                 var config = AutoMapperGenericsHelper.InitializeAutomapper();
                 var mapper = new Mapper(config);
 
-                var comics = mapper.Map<IEnumerable<Result>?, IEnumerable<ComicModel>?>(comicResponse.Data?.Results)?.ToList();
+                var comics = mapper.Map<IEnumerable<Result>?, IEnumerable<ComicModel>?>(comicResponse.Data.Results)?.ToList();
 
                 var dataTableResponse = new DataTableModel<ComicModel>(comics);
 
-                if (comicResponse.Data != null)
-                {
-                    dataTableResponse.Total = Convert.ToInt32(comicResponse.Data.Total);
-                    dataTableResponse.Offset = Convert.ToInt32(comicResponse.Data.Offset);
-                    dataTableResponse.Limit = Convert.ToInt32(comicResponse.Data.Limit);
-                }
+                dataTableResponse.Total = Convert.ToInt32(comicResponse.Data.Total);
+                dataTableResponse.Offset = Convert.ToInt32(comicResponse.Data.Offset);
+                dataTableResponse.Limit = Convert.ToInt32(comicResponse.Data.Limit);
+                
                 return dataTableResponse;
             }
             else
@@ -91,11 +89,11 @@ namespace WAppMarvelComics.Domain.Services
             var readContent = await response.Content.ReadAsStringAsync(cancellationToken);
             var comicResponse = JsonConvert.DeserializeObject<ComicResponse>(readContent);
 
-            if (comicResponse != null)
+            if (comicResponse != null && comicResponse.Data != null)
             {
                 var config = AutoMapperGenericsHelper.InitializeAutomapper();
                 var mapper = new Mapper(config);
-                comic = mapper.Map<Result?, ComicDetailModel>(comicResponse.Data?.Results?.FirstOrDefault());
+                comic = mapper.Map<Result?, ComicDetailModel>(comicResponse.Data.Results?.FirstOrDefault());
             }
             return comic;
         }
